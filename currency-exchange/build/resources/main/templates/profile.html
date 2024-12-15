@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <h1>Your Profile</h1>
+</header>
+<section>
+    <h2>Transaction History</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Currency From</th>
+            <th>Currency To</th>
+            <th>Amount From</th>
+            <th>Amount To</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction : ${transactions}">
+            <td th:text="${transaction.id}"></td>
+            <td th:text="${transaction.currencyFrom}"></td>
+            <td th:text="${transaction.currencyTo}"></td>
+            <td th:text="${transaction.amountFrom}"></td>
+            <td th:text="${transaction.amountTo}"></td>
+            <td th:text="${transaction.transactionDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

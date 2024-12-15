@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обмен валюты</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <style>
+        /* Временные стили, если основной CSS еще не добавлен */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #34495e;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header nav ul li a:hover {
+            color: #16a085;
+        }
+
+        form {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        form select, form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ecf0f1;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        form button {
+            background-color: #16a085;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #1abc9c;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Шапка сайта с ссылками на страницы -->
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Главная</a></li>
+            <li><a th:href="@{/currencies}">Обмен валюты</a></li>
+            <li><a th:href="@{/balance}">Баланс</a></li>
+            <li><a th:href="@{/profile}">Профиль</a></li>
+            <li><a th:href="@{/logout}">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Контейнер с формой обмена валюты -->
+<div class="container">
+    <h2>Обмен валюты</h2>
+
+    <!-- Форма обмена валюты -->
+    <form th:action="@{/currencies/exchange}" method="post">
+        <label for="userId">Выберите пользователя:</label>
+        <select name="userId" id="userId">
+            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+        </select><br>
+
+        <label for="fromCurrencyCode">Исходная валюта:</label>
+        <select name="fromCurrencyCode" id="fromCurrencyCode">
+            <option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.name}"></option>
+        </select><br>
+
+        <label for="toCurrencyCode">Целевая валюта:</label>
+        <select name="toCurrencyCode" id="toCurrencyCode">
+            <option th:each="currency : ${currencies}" th:value="${currency.code}" th:text="${currency.name}"></option>
+        </select><br>
+
+        <label for="amount">Сумма для обмена:</label>
+        <input type="number" name="amount" id="amount" step="0.01" required><br>
+
+        <button type="submit">Обменять</button>
+    </form>
+
+    <!-- Результат обмена -->
+    <p th:text="${result}" class="result"></p>
+</div>
+
+</body>
+</html>

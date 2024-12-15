@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Exchange - Currencies</title>
+    <!-- Правильный путь для подключения стилей -->
+
+</head>
+<body>
+<h1>Currency List</h1>
+
+<!-- Кнопка для добавления новой валюты -->
+<a href="/currencies/add">Add New Currency</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Exchange Rate</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="currency : ${currencies}">
+        <td th:text="${currency.id}"></td>
+        <td th:text="${currency.name}"></td>
+        <td th:text="${currency.exchangeRate}"></td>
+        <td>
+            <!-- Ссылка для редактирования валюты -->
+            <a th:href="@{/currencies/edit/{id}(id=${currency.id})}">Edit</a> |
+            <!-- Ссылка для удаления валюты -->
+            <a th:href="@{/currencies/delete/{id}(id=${currency.id})}" th:onclick="return confirm('Are you sure you want to delete this currency?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
